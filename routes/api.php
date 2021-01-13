@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,8 @@ Route::apiResource("/image", ImageController::class);
 Route::get("/tag/{imageId}", 'App\Http\Controllers\TagController@getImageTags');
 Route::post("/tag", 'App\Http\Controllers\TagController@attachToImage');
 Route::delete("/tag", 'App\Http\Controllers\TagController@detachFromImage');
+
+Route::post("/register", 'App\Http\Controllers\AuthController@register');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
