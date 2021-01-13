@@ -24,6 +24,8 @@ Route::post("/tag", 'App\Http\Controllers\TagController@attachToImage');
 Route::delete("/tag", 'App\Http\Controllers\TagController@detachFromImage');
 
 Route::post("/register", 'App\Http\Controllers\AuthController@register');
+Route::post("/login", 'App\Http\Controllers\AuthController@login');
+Route::post("/logout", 'App\Http\Controllers\AuthController@logout');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
