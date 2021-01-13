@@ -3,18 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ImageController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Image[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
+     * @param Request $request
+     * @return Image[]|Collection|Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Image::all();
+        $sort = $request->query('sort');
+        $sortColumn = $sort == 1 ? 'created_at' : 'view_count';
+        return Image::orderBy($sortColumn, 'DESC')->get();
     }
 
     /**
