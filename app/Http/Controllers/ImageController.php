@@ -42,7 +42,9 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        return Image::find($id);
+        $foundImage = Image::find($id);
+        $foundImage->increment('view_count');
+        return $foundImage;
     }
 
     /**
