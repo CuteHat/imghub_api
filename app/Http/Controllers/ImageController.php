@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -73,5 +74,37 @@ class ImageController extends Controller
     public function destroy($id)
     {
         Image::destroy($id);
+    }
+
+
+    public function getImagesWithTag(Request $request)
+    {
+        $tag = trim($request->query('tag'));
+        $result = [];
+
+        if (strlen($tag) >= 3) {
+            $foundTags = Tag::where('name', 'LIKE', '%' . $tag . '%')->get();
+//            dd($foundTags[0]->images()->get());
+            foreach ($foundTags as &$currentTag) {
+                $foundImages = $currentTag->images()->get();
+                foreach ($foundImages as &$foundImage) {
+                    if (!$this->resultContainsId($result, $foundImage->id)) {
+                        array_push($result, $foundImage);
+                    }
+                }
+            }
+//            dd($result, array_search(1, array_column($result, "id")));
+            return $result;
+        }
+    }
+
+    private function resultContainsId($array, $id)
+    {
+        foreach ($array as &$element) {
+            if ($element->id == $id) {
+                return true;
+            }
+        }
+        return false;
     }
 }

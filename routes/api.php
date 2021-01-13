@@ -16,8 +16,8 @@ use App\Http\Controllers\TagController;
 |
 */
 
+Route::get("/image/search", 'App\Http\Controllers\ImageController@getImagesWithTag');
 Route::apiResource("/image", ImageController::class);
-
 Route::get("/tag/{imageId}", 'App\Http\Controllers\TagController@getImageTags');
 Route::post("/tag", 'App\Http\Controllers\TagController@attachToImage');
 Route::delete("/tag", 'App\Http\Controllers\TagController@detachFromImage');
