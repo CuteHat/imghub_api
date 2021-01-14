@@ -32,7 +32,7 @@ class ImageController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return void
+     * @return Image
      */
     public function store(Request $request)
     {
@@ -43,6 +43,7 @@ class ImageController extends Controller
 
         $newImage = new Image($request->all());
         $newImage->save();
+        return $newImage;
     }
 
     /**
