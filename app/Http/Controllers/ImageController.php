@@ -16,6 +16,11 @@ class ImageController extends Controller
      * @param Request $request
      * @return Image[]|Collection|Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['index', 'show']]);
+    }
+
     public function index(Request $request)
     {
         $sort = $request->query('sort');
