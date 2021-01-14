@@ -26,10 +26,6 @@ class AuthController extends Controller
         $user->email = $request->input('email');
         $user->password = $request->input('password');
         $user->save();
-
-        $token = auth()->login($user);
-
-        return $this->respondWithToken($token);
     }
 
     public function logout()
