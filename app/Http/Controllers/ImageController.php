@@ -65,6 +65,13 @@ class ImageController extends Controller
         return $foundImage;
     }
 
+    public function getUserImages()
+    {
+        $decodedToken = JWTAuth::getPayload(JWTAuth::getToken())->toArray();
+        $userId = $decodedToken['sub'];
+        return Image::where('user_id', "=", $userId)->get();
+    }
+
     /**
      * Update the specified resource in storage.
      *

@@ -27,11 +27,12 @@ Route::post("/login", 'App\Http\Controllers\AuthController@login');
 
 Route::group([
     'middleware' => 'api',
-    ],  function ($router) {
-        Route::post("/image", 'App\Http\Controllers\ImageController@store');
-        Route::put("/image/{imageId}", 'App\Http\Controllers\ImageController@update');
-        Route::delete("/image/{imageId}", 'App\Http\Controllers\ImageController@destroy');
-        Route::post("/logout", 'App\Http\Controllers\AuthController@logout');
-        Route::post("/tag", 'App\Http\Controllers\TagController@attachToImage');
-        Route::delete("/tag", 'App\Http\Controllers\TagController@detachFromImage');
+], function ($router) {
+    Route::post("/image", 'App\Http\Controllers\ImageController@store');
+    Route::put("/image/{imageId}", 'App\Http\Controllers\ImageController@update');
+    Route::delete("/image/{imageId}", 'App\Http\Controllers\ImageController@destroy');
+    Route::post("/logout", 'App\Http\Controllers\AuthController@logout');
+    Route::post("/tag", 'App\Http\Controllers\TagController@attachToImage');
+    Route::delete("/tag", 'App\Http\Controllers\TagController@detachFromImage');
+    Route::get("/user/image", 'App\Http\Controllers\ImageController@getUserImages');
 });
