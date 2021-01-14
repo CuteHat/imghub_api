@@ -17,16 +17,21 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::get("/image/search", 'App\Http\Controllers\ImageController@getImagesWithTag');
-Route::apiResource("/image", ImageController::class);
-Route::get("/tag/{imageId}", 'App\Http\Controllers\TagController@getImageTags');
-Route::post("/tag", 'App\Http\Controllers\TagController@attachToImage');
-Route::delete("/tag", 'App\Http\Controllers\TagController@detachFromImage');
 
+Route::get("/image/search", 'App\Http\Controllers\ImageController@getImagesWithTag');
+Route::get("/image", 'App\Http\Controllers\ImageController@index');
+Route::get("/image/{imageId}", 'App\Http\Controllers\ImageController@show');
+Route::get("/tag/{imageId}", 'App\Http\Controllers\TagController@getImageTags');
 Route::post("/register", 'App\Http\Controllers\AuthController@register');
 Route::post("/login", 'App\Http\Controllers\AuthController@login');
-Route::post("/logout", 'App\Http\Controllers\AuthController@logout');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => 'api',
+    ],  function ($router) {
+        Route::post("/image", 'App\Http\Controllers\ImageController@store');
+        Route::put("/image/{imageId}", 'App\Http\Controllers\ImageController@update');
+        Route::delete("/image/{imageId}", 'App\Http\Controllers\ImageController@destroy');
+        Route::post("/logout", 'App\Http\Controllers\AuthController@logout');
+        Route::post("/tag", 'App\Http\Controllers\TagController@attachToImage');
+        Route::delete("/tag", 'App\Http\Controllers\TagController@detachFromImage');
 });
