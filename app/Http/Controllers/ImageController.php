@@ -7,6 +7,9 @@ use App\Models\Tag;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
+//use this library
 
 class ImageController extends Controller
 {
@@ -40,8 +43,11 @@ class ImageController extends Controller
             'title' => 'required',
             'url' => 'required',
         ]);
-
-        $newImage = new Image($request->all());
+        $decodedToken = JWTAuth::getPayload(JWTAuth::getToken())->toArray();
+        $newImage = new Image;
+        $newImage->user_id = $decodedToken['sub'];
+        $newImage->title = $request->input('title');
+        $newImage->url = $request->input('url');
         $newImage->save();
         return $newImage;
     }
@@ -90,7 +96,6 @@ class ImageController extends Controller
 
         if (strlen($tag) >= 3) {
             $foundTags = Tag::where('name', 'LIKE', '%' . $tag . '%')->get();
-//            dd($foundTags[0]->images()->get());
             foreach ($foundTags as &$currentTag) {
                 $foundImages = $currentTag->images()->get();
                 foreach ($foundImages as &$foundImage) {
@@ -99,7 +104,6 @@ class ImageController extends Controller
                     }
                 }
             }
-//            dd($result, array_search(1, array_column($result, "id")));
             return $result;
         }
     }

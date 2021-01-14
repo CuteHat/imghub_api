@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->string('title');
             $table->string('url');
             $table->integer('view_count')->default(0);
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
