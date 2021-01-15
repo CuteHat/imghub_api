@@ -84,6 +84,21 @@ class ImageController extends Controller
         Image::find($id)->update($request->all());
     }
 
+    public function updateTitle(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'title' => 'required',
+        ]);
+
+        $foundImage = Image::find($request->input('id'));
+
+        if ($foundImage) {
+            $foundImage->title = $request->input('title');
+            $foundImage->save();
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

@@ -28,6 +28,7 @@ Route::post("/login", 'App\Http\Controllers\AuthController@login');
 Route::group([
     'middleware' => 'api',
 ], function ($router) {
+    Route::post("/image/title", 'App\Http\Controllers\ImageController@updateTitle');
     Route::post("/image", 'App\Http\Controllers\ImageController@store');
     Route::put("/image/{imageId}", 'App\Http\Controllers\ImageController@update');
     Route::delete("/image/{imageId}", 'App\Http\Controllers\ImageController@destroy');
